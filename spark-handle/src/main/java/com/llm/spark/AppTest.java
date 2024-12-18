@@ -17,7 +17,7 @@ public class AppTest {
         .getOrCreate();
 
     // 创建一个简单的 DataFrame
-    Dataset<Row> data = spark.read().json("src/main/resources/sample.json");
+    Dataset<Row> data = spark.read().json("/Users/macbook/IdeaProjects/llm-data-process/spark-handle/src/main/resources/sample.json");
 
     // 展示 DataFrame 内容
     data.show();

@@ -144,11 +144,11 @@ public class BaiduHtmlParser extends UDF {
     return objectMapper.writeValueAsString(data);
   }
 
-  public static void main(String[] args) throws IOException {
-    String filePath = "/Users/macbook/Downloads/百度百科_白森林品牌.html";  // 替换为文件路径
-    String content = new String(Files.readAllBytes(Paths.get(filePath)));
-    String titleMap = evaluate(content);
-
-    System.out.println(titleMap);
-  }
+//  public static void main(String[] args) throws IOException {
+//    String filePath = "/Users/macbook/Downloads/百度百科_白森林品牌.html";  // 替换为文件路径
+//    String content = new String(Files.readAllBytes(Paths.get(filePath)));
+//    String titleMap = evaluate(content);
+//
+//    System.out.println(titleMap);
+//  }
 }

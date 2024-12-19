@@ -17,13 +17,10 @@ public class AppTest {
         .getOrCreate();
 
     // 创建一个简单的 DataFrame
-    Dataset<Row> data = spark.read().json("/Users/macbook/IdeaProjects/llm-data-process/spark-handle/src/main/resources/sample.json");
-
+    Dataset<Row> data = spark.read().parquet("/Users/macbook/Downloads/67981ac027eee9cbb9639dcbc2132e83.parquet");
+    data.schema().printTreeString();
     // 展示 DataFrame 内容
     data.show();
-
-    // 进行简单的查询
-    data.select("name").where("age > 20").show();
 
     // 停止 SparkSession
     spark.stop();

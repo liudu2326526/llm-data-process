@@ -17,7 +17,7 @@ public class SparkSessionUtils {
     }
     SparkSession spark = SparkSession.builder()
         .appName(appName)
-        .enableHiveSupport()
+        .master("local[*]") // 使用本地模式，[*] 表示使用所有可用 CPU 核心
         .getOrCreate();
     return spark;
   }

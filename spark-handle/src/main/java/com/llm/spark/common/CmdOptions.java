@@ -2,13 +2,12 @@ package com.llm.spark.common;
 
 import com.google.common.collect.Maps;
 import java.util.Map;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.GnuParser;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 
-@Slf4j
+
 public class CmdOptions {
 
   private static CmdOptions options;
@@ -29,9 +28,9 @@ public class CmdOptions {
   }
 
   public static void init(String[] args) {
-    log.info("args:");
+//    log.info("args:");
     for (String arg : args) {
-      log.info(arg);
+//      log.info(arg);
     }
     options = new CmdOptions(parseCommandLine(args));
   }

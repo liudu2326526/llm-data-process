@@ -55,7 +55,7 @@ public class BaiduHtmlParser extends UDF {
           StringBuilder valueText = new StringBuilder();
 
           // 拼接所有 span 和 a 标签中的文本
-          Elements spansAndLinks = valueElement.select("span, a");
+          Elements spansAndLinks = valueElement.select("span[class~=.*text.*]");
           for (Element spanOrLink : spansAndLinks) {
             valueText.append(spanOrLink.text().trim());
           }
@@ -158,11 +158,11 @@ public class BaiduHtmlParser extends UDF {
     return objectMapper.writeValueAsString(data);
   }
 
-//  public static void main(String[] args) throws IOException {
-//    String filePath = "/Users/macbook/IdeaProjects/llm-data-process/data-parser/src/main/resources/百度百科_白森林品牌.html";  // 替换为文件路径
-//    String content = new String(Files.readAllBytes(Paths.get(filePath)));
-//    String titleMap = evaluate(content);
-//
-//    System.out.println(titleMap);
-//  }
+  public static void main(String[] args) throws IOException {
+    String filePath = "/Users/macbook/IdeaProjects/llm-data-process/data-parser/src/main/resources/百度百科_白森林品牌.html";  // 替换为文件路径
+    String content = new String(Files.readAllBytes(Paths.get(filePath)));
+    String titleMap = evaluate(content);
+
+    System.out.println(titleMap);
+  }
 }

@@ -17,10 +17,12 @@ public class AppTest {
         .getOrCreate();
 
     // 创建一个简单的 DataFrame
-    Dataset<Row> data = spark.read().parquet("/Users/macbook/Downloads/67981ac027eee9cbb9639dcbc2132e83.parquet");
+    Dataset<Row> data = spark.read().parquet("/Users/macbook/Downloads/4ed6280789a878d31f005ba5c6ab6055.parquet");
     data.schema().printTreeString();
     // 展示 DataFrame 内容
     data.show();
+    data = data.select("raw_data");
+    data.write().text("/Users/macbook/Downloads/parser_test.txt");
 
     // 停止 SparkSession
     spark.stop();

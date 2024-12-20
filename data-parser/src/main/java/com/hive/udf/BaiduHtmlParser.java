@@ -41,15 +41,15 @@ public class BaiduHtmlParser extends UDF {
     Map<String, String> basicInfo = new HashMap<>();
 
     // 查找基本信息部分
-    Element basicInfoSection = doc.selectFirst("div.basicInfo_pXBZ7.J-basic-info");
+    Element basicInfoSection = doc.selectFirst("div[class~=.*basicInfo.*][class~=.*basic-info.*]");
 
     if (basicInfoSection != null) {
       // 遍历所有条目
-      Elements items = basicInfoSection.select("div.itemWrapper_CR0U3");
+      Elements items = basicInfoSection.select("div[class~=.*itemWrappe.*]");
       for (Element item : items) {
-        Element keyElement = item.selectFirst("dt.basicInfoItem_vbiBk.itemName_fOdwv");
-        Element valueElement = item.selectFirst("dd.basicInfoItem_vbiBk.itemValue_JaQOj");
-
+        Element keyElement = item.selectFirst("dt[class~=.*basicInfoItem.*][class~=.*itemName.*]");
+        Element valueElement = item.selectFirst(
+            "dd[class~=.*basicInfoItem.*][class~=.*itemValue.*]");
         if (keyElement != null && valueElement != null) {
           String keyText = keyElement.text().trim();
           StringBuilder valueText = new StringBuilder();
@@ -73,10 +73,24 @@ public class BaiduHtmlParser extends UDF {
     data.put("title", title);
 
     // ===== 提取 meta 描述和关键词 =====
-    Element metaDescription = doc.selectFirst("meta[name=description]");
+//    Element metaDescription = doc.selectFirst("meta[name=description]");
     Element metaKeywords = doc.selectFirst("meta[name=keywords]");
-    data.put("description", metaDescription != null ? metaDescription.attr("content") : null);
     data.put("keywords", metaKeywords != null ? metaKeywords.attr("content") : null);
+
+    Element metaDescription = doc.selectFirst("div[class~=.*lemmaSummary.*][class~=.*summary.*]");
+    Elements markModule = metaDescription.select(
+        "div[class~=.*para.*][class~=.*summary.*][class~=.*MARK_MODULE.*]");
+
+    ArrayList<String> strings = new ArrayList<>();
+    for (Element element : markModule) {
+      StringBuilder stringBuilder = new StringBuilder();
+      Elements select = element.select("span[class~=.*text.*][data-text=true]");
+      for (Element desc : select) {
+        stringBuilder.append(desc.text());
+      }
+      strings.add(stringBuilder.toString());
+    }
+    data.put("description", String.join("\n", strings));
 
     // ===== 提取目录数据 =====
     List<Map<String, Object>> catalog = new ArrayList<>();
@@ -105,10 +119,10 @@ public class BaiduHtmlParser extends UDF {
     Map<String, List<String>> paragraphsByPrefix = new HashMap<>();
     Map<String, List<String>> indicesByPrefix = new HashMap<>();
 
-    Elements divs = doc.select("div.para_G3_Os.content_cFweI.MARK_MODULE");
+    Elements divs = doc.select("div[class~=.*para.*][class~=.*content.*].MARK_MODULE");
     for (Element div : divs) {
       StringBuilder paragraphText = new StringBuilder();
-      Elements spans = div.select("span.text_B_eob");
+      Elements spans = div.select("span[class~=.*text.*]");
       for (Element span : spans) {
         paragraphText.append(span.text().trim());
       }
@@ -145,7 +159,7 @@ public class BaiduHtmlParser extends UDF {
   }
 
 //  public static void main(String[] args) throws IOException {
-//    String filePath = "/Users/macbook/Downloads/百度百科_白森林品牌.html";  // 替换为文件路径
+//    String filePath = "/Users/macbook/IdeaProjects/llm-data-process/data-parser/src/main/resources/百度百科_白森林品牌.html";  // 替换为文件路径
 //    String content = new String(Files.readAllBytes(Paths.get(filePath)));
 //    String titleMap = evaluate(content);
 //

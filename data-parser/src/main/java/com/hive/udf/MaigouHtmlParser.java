@@ -22,13 +22,13 @@ public class MaigouHtmlParser extends UDF {
   public static String evaluate(String content) {
     try {
       return processHtmlFile(content);
-    } catch (IOException e) {
+    } catch (Exception e) {
       e.printStackTrace();
       return "";
     }
   }
 
-  public static String processHtmlFile(String content) throws IOException {
+  public static String processHtmlFile(String content) throws Exception {
     Map<String, Object> data = new HashMap<>();
     ObjectMapper objectMapper = new ObjectMapper();
     // 解析HTML

@@ -24,13 +24,13 @@ public class BaiduHtmlParser extends UDF {
   public static String evaluate(String content) {
     try {
       return processHtmlFile(content);
-    } catch (IOException e) {
+    } catch (Exception e) {
       e.printStackTrace();
       return "";
     }
   }
 
-  public static String processHtmlFile(String content) throws IOException {
+  public static String processHtmlFile(String content) throws Exception {
     // 读取和解析HTML内容
     Document doc = Jsoup.parse(content, "UTF-8");
     ObjectMapper objectMapper = new ObjectMapper();
